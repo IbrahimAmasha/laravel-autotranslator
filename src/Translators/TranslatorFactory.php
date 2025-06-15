@@ -1,6 +1,6 @@
 <?php
 
-namespace IbrahimAmasha\AutoTranslator\Translators;
+namespace ibrahimamasha\AutoTranslator\Translators;
 
 class TranslatorFactory
 {

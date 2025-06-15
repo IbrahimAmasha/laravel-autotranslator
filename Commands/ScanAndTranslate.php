@@ -1,12 +1,12 @@
 <?php
 
-namespace IbrahimAmasha\AutoTranslator\Commands;
+namespace ibrahimamasha\AutoTranslator\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
-use Ibrahim\AutoTranslator\Translators\DeepLDriver;
-use IbrahimAmasha\AutoTranslator\Translators\MyMemoryDriver;
+use ibrahimamasha\AutoTranslator\Translators\DeepLDriver;
+use ibrahimamasha\AutoTranslator\Translators\MyMemoryDriver;
 
 class ScanAndTranslate extends Command
 {
