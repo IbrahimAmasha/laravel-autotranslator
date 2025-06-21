@@ -1,5 +1,5 @@
 {
-  "name": "IbrahimAmasha/auto-translator",
+  "name": "ibrahimamasha/auto-translator",
   "description": "Automatically translate Laravel JSON files using AI or free tools.",
   "type": "library",
   "autoload": {
