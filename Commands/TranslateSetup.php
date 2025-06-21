@@ -1,6 +1,6 @@
 <?php
 
-namespace ibrahimmasha\autotranslator\Commands;
+namespace ibrahimmasha\AutoTranslator\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;

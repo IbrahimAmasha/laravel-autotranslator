@@ -4,7 +4,7 @@
   "type": "library",
   "autoload": {
     "psr-4": {
-      "ibrahimmasha\\autotranslator\\": "src/"
+      "ibrahimmasha\\AutoTranslator\\": "src/"
     }
   },
   "extra": {
