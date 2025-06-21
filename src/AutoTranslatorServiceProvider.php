@@ -1,6 +1,6 @@
 <?php
 
-namespace ibrahimmasha\AutoTranslator;
+namespace ibrahimmasha\autotranslator;
 
 use Illuminate\Support\ServiceProvider;
 use ibrahimmasha\autotranslator\Commands\TranslateSetup;
