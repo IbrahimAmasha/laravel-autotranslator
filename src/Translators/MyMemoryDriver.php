@@ -1,6 +1,6 @@
 <?php
 
-namespace ibrahimamasha\AutoTranslator\Translators;
+namespace IbrahimAmasha\AutoTranslator\Translators;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
