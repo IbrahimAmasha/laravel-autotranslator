@@ -1,10 +1,10 @@
 <?php
 
-namespace IbrahimAmasha\AutoTranslator;
+namespace ibrahimmasha\AutoTranslator;
 
 use Illuminate\Support\ServiceProvider;
-use IbrahimAmasha\AutoTranslator\Commands\TranslateSetup;
-use IbrahimAmasha\AutoTranslator\Commands\ScanAndTranslate;
+use ibrahimmasha\AutoTranslator\Commands\TranslateSetup;
+use ibrahimmasha\AutoTranslator\Commands\ScanAndTranslate;
 
 class AutoTranslatorServiceProvider extends ServiceProvider
 {
