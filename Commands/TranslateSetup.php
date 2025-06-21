@@ -1,6 +1,6 @@
 <?php
 
-namespace ibrahimmasha\AutoTranslator\Commands;
+namespace ibrahimmasha\autotranslator\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -26,7 +26,7 @@ class TranslateSetup extends Command
         // Publish configuration file if not exists
         if (!File::exists(config_path('autotranslator.php'))) {
             $this->call('vendor:publish', [
-                '--provider' => 'Ibrahim\AutoTranslator.AutoTranslatorServiceProvider',
+                '--provider' => 'Ibrahim\autotranslator.AutoTranslatorServiceProvider',
                 '--tag' => 'config',
             ]);
         }

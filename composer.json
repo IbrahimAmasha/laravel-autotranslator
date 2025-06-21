@@ -4,13 +4,13 @@
   "type": "library",
   "autoload": {
     "psr-4": {
-      "ibrahimmasha\\AutoTranslator\\": "src/"
+      "ibrahimmasha\\autotranslator\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "ibrahimmasha\\AutoTranslator\\AutoTranslatorServiceProvider"
+        "ibrahimmasha\\autotranslator\\AutoTranslatorServiceProvider"
       ]
     }
   },
