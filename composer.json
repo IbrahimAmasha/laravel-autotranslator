@@ -1,16 +1,16 @@
 {
-  "name": "ibrahim-amasha/autotranslator",
+  "name": "ibrahim-amasha/test1",
   "description": "Automatically translate Laravel JSON files using AI or free tools.",
   "type": "library",
   "autoload": {
     "psr-4": {
-      "ibrahimmasha\\AutoTranslator\\": "src/"
+      "ibrahimmasha\\test2\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "ibrahimmasha\\autotranslator\\AutoTranslatorServiceProvider"
+        "ibrahimmasha\\test3\\AutoTranslatorServiceProvider"
       ]
     }
   },
