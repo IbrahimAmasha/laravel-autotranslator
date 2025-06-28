@@ -4,7 +4,7 @@
   "type": "library",
   "autoload": {
     "psr-4": {
-      "ibrahimmasha\\AutoTranslator\\": "src/"
+      "ibrahimmasha\\autotranslator\\": "src/"
     }
   },
   "extra": {
@@ -16,5 +16,8 @@
   },
   "require": {
     "deeplcom/deepl-php": "^1.4"
+  },
+  "suggest": {
+    "laravel/framework": "Required for Laravel integration"
   }
 }
