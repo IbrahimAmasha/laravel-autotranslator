@@ -79,9 +79,28 @@ class MyMemoryDriver
     public function batchTranslate(array $texts, string $from = 'en', string $to = 'ar'): array
     {
         $translations = [];
-        $chunkSize = 50;
-        $chunks = array_chunk($texts, $chunkSize);
-
+        $maxQueryLength = 500; // MyMemory API query length limit
+        $chunks = [];
+        $currentChunk = [];
+        $currentLength = 0;
+    
+        // Dynamically create chunks based on character length
+        foreach ($texts as $text) {
+            $textLength = strlen($text) + 1; // Include newline character
+            if ($currentLength + $textLength > $maxQueryLength && !empty($currentChunk)) {
+                // Start a new chunk
+                $chunks[] = $currentChunk;
+                $currentChunk = [$text];
+                $currentLength = $textLength;
+            } else {
+                $currentChunk[] = $text;
+                $currentLength += $textLength;
+            }
+        }
+        if (!empty($currentChunk)) {
+            $chunks[] = $currentChunk;
+        }
+    
         foreach ($chunks as $chunk) {
             try {
                 $query = [
@@ -91,22 +110,23 @@ class MyMemoryDriver
                 if ($this->apiKey) {
                     $query['key'] = $this->apiKey;
                 }
-
-                // Log::debug('MyMemory API batch request', [
-                //     'endpoint' => $this->endpoint,
-                //     'query' => array_merge($query, ['key' => $this->apiKey ? '[redacted]']),
-                //     'text_count' => count($chunk),
-                // ]);
-
+    
+                Log::debug('MyMemory API batch request', [
+                    'endpoint' => $this->endpoint,
+                    'query' => array_merge($query, ['key' => $this->apiKey ? '[redacted]' : 'none']),
+                    'text_count' => count($chunk),
+                    'query_length' => strlen($query['q']),
+                ]);
+    
                 $response = Http::timeout(15)->get($this->endpoint, $query);
-
+    
                 $responseData = [
                     'status' => $response->status(),
                     'headers' => $response->headers(),
                     'body' => $response->body(),
                 ];
                 Log::debug('MyMemory API batch response', $responseData);
-
+    
                 if ($response->successful()) {
                     $data = $response->json();
                     $translated = $data['responseData']['translatedText'] ?? null;
@@ -123,7 +143,7 @@ class MyMemoryDriver
                     $errorMessage = $response->body();
                     $data = $response->json();
                     $responseDetails = $data['responseDetails'] ?? $errorMessage;
-
+    
                     if ($response->status() === 429 || str_contains($errorMessage, 'Quota') || str_contains($errorMessage, 'limit reached')) {
                         $resetInfo = $this->extractResetInfo($responseDetails);
                         $errorMsg = "MyMemory daily translation quota reached.{$resetInfo}";
@@ -143,7 +163,7 @@ class MyMemoryDriver
                 throw $e;
             }
         }
-
+    
         return $translations;
     }
 
