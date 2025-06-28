@@ -116,11 +116,11 @@ The package will generate:
 
 ---
 
-## 👤 Author
+## Author
 
 **Ibrahim Amasha**  
 Laravel Developer & Open Source Contributor  
-🔗 [GitHub](https://github.com/your-github-username)
+🔗 [LinkedIn](https://www.linkedin.com/in/ibrahim-amasha-24199a230)
 
 ---
 
