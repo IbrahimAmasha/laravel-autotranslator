@@ -102,7 +102,8 @@ The package generates:
 ## Author
 
 **Ibrahim Amasha**  
-[LinkedIn](https://www.linkedin.com/in/ibrahim-amasha-24199a230)
+[LinkedIn](https://www.linkedin.com/in/ibrahim-amasha-24199a230)  
+[GitLab](https://gitlab.com/ibrahimamasha7)
 
 ---
 
