@@ -19,8 +19,7 @@ It scans your code for translation keys, fills in missing entries in `lang/en.js
 ## Installation
 
 ```bash
-composer require ibrahim/autotranslator
-```
+composer require ibrahimamasha/autotranslator```
 
 ---
 
