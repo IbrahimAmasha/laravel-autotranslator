@@ -291,24 +291,20 @@ class ScanAndTranslate extends Command
     protected function loadJsonFile(string $filePath, string $type): ?array
     {
         if (!file_exists($filePath)) {
-            Log::warning("{$type} file does not exist: {$filePath}");
             return [];
         }
 
         $content = @file_get_contents($filePath);
         if ($content === false) {
-            Log::error("Unable to read {$type} file: {$filePath}");
             return null;
         }
 
         if (empty(trim($content))) {
-            Log::warning("{$type} file is empty: {$filePath}");
             return [];
         }
 
         $data = json_decode($content, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            Log::error("Invalid JSON in {$type} file: {$filePath}. Error: " . json_last_error_msg());
             return null;
         }
 

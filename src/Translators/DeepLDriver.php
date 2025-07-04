@@ -14,7 +14,6 @@ class DeepLDriver
     {
         $this->endpoint = config('autotranslator.deepl.endpoint', 'https://api-free.deepl.com/v2/translate');
         $this->apiKey = config('autotranslator.deepl.api_key', null);
-        Log::debug('DeepLDriver initialized', ['api_key' => $this->apiKey ? '[redacted]' : 'none']);
     }
 
     public function translate(string $text, string $from = 'en', string $to = 'ar'): ?string
@@ -23,7 +22,6 @@ class DeepLDriver
             throw new \Exception('DeepL API key not configured.');
         }
         if (empty(trim($text))) {
-            Log::warning('Empty text provided for DeepL translation.');
             return null;
         }
 
@@ -35,11 +33,6 @@ class DeepLDriver
                 'target_lang' => strtoupper($to),
             ];
 
-            Log::debug('DeepL API request', [
-                'endpoint' => $this->endpoint,
-                'form' => array_merge($form, ['auth_key' => '[redacted]']),
-                'raw_text' => $text,
-            ]);
 
             $response = Http::asForm()->timeout(10)->post($this->endpoint, $form);
 
@@ -48,7 +41,6 @@ class DeepLDriver
                 'headers' => $response->headers(),
                 'body' => $response->body(),
             ];
-            Log::debug('DeepL API response', $responseData);
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -56,7 +48,6 @@ class DeepLDriver
                 if ($translation && $this->isValidTranslation($translation, $text)) {
                     return $translation;
                 }
-                Log::warning('Invalid translation received for: ' . $text);
                 return null;
             }
 
@@ -68,10 +59,8 @@ class DeepLDriver
                 throw new \Exception('Invalid DeepL API key.');
             }
 
-            Log::error('DeepL API error: ' . $errorMessage);
             return null;
         } catch (\Exception $e) {
-            Log::error('DeepL translation error: ' . $e->getMessage());
             throw $e;
         }
     }
@@ -83,7 +72,6 @@ class DeepLDriver
             try {
                 $translations[] = $this->translate($text, $from, $to);
             } catch (\Exception $e) {
-                Log::warning('DeepL batch translation failed for: ' . $text . '. Error: ' . $e->getMessage());
                 $translations[] = null;
             }
         }

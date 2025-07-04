@@ -14,7 +14,6 @@ class MyMemoryDriver
     {
         $this->endpoint = config('autotranslator.mymemory.endpoint', 'https://api.mymemory.translated.net/get');
         $this->apiKey = config('autotranslator.api_key', null);
-        Log::debug('MyMemoryDriver initialized', ['api_key' => $this->apiKey ? '[redacted]' : 'none']);
     }
 
     public function translate(string $text, string $from = 'en', string $to = 'ar'): ?string
@@ -28,10 +27,6 @@ class MyMemoryDriver
                 $query['key'] = $this->apiKey;
             }
 
-            // Log::debug('MyMemory API request', [
-            //     'endpoint' => $this->endpoint,
-            //     'query' => array_merge($query, ['key' => $this->apiKey ? '[redacted]']),
-            // ]);
 
             $response = Http::timeout(10)->get($this->endpoint, $query);
 
@@ -40,7 +35,6 @@ class MyMemoryDriver
                 'headers' => $response->headers(),
                 'body' => $response->body(),
             ];
-            Log::debug('MyMemory API response', $responseData);
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -48,7 +42,6 @@ class MyMemoryDriver
                 if ($translation && $this->isValidTranslation($translation, $text)) {
                     return $translation;
                 }
-                Log::warning('Invalid translation received for: ' . $text);
                 return null;
             }
 
@@ -68,10 +61,8 @@ class MyMemoryDriver
                 throw new \Exception('Invalid MyMemory API key provided.');
             }
 
-            Log::error('MyMemory API error: ' . $responseDetails);
             return null;
         } catch (\Exception $e) {
-            Log::error('MyMemory translation error: ' . $e->getMessage());
             throw $e;
         }
     }
@@ -111,12 +102,6 @@ class MyMemoryDriver
                     $query['key'] = $this->apiKey;
                 }
     
-                Log::debug('MyMemory API batch request', [
-                    'endpoint' => $this->endpoint,
-                    'query' => array_merge($query, ['key' => $this->apiKey ? '[redacted]' : 'none']),
-                    'text_count' => count($chunk),
-                    'query_length' => strlen($query['q']),
-                ]);
     
                 $response = Http::timeout(15)->get($this->endpoint, $query);
     
@@ -125,7 +110,6 @@ class MyMemoryDriver
                     'headers' => $response->headers(),
                     'body' => $response->body(),
                 ];
-                Log::debug('MyMemory API batch response', $responseData);
     
                 if ($response->successful()) {
                     $data = $response->json();
@@ -155,11 +139,9 @@ class MyMemoryDriver
                     if ($response->status() === 401 || str_contains($errorMessage, 'Invalid API key')) {
                         throw new \Exception('Invalid MyMemory API key provided.');
                     }
-                    Log::error('MyMemory API error: ' . $responseDetails);
                     $translations = array_merge($translations, array_fill(0, count($chunk), null));
                 }
             } catch (\Exception $e) {
-                Log::error('MyMemory batch translation error: ' . $e->getMessage());
                 throw $e;
             }
         }
