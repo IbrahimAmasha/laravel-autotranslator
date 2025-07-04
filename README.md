@@ -1,24 +1,22 @@
-# 🌍 Laravel AutoTranslator
+# Laravel AutoTranslator
 
-**Laravel AutoTranslator** is a developer-friendly Laravel package that automates the process of translating your language files — especially useful for bilingual (Arabic/English) projects.  
-It detects all translation keys in your Blade templates and controllers, fills in missing entries in `lang/en.json`, and generates accurate translations in `lang/ar.json` using **MyMemory** or **DeepL**.
+**Laravel AutoTranslator** is a simple Laravel package to automate translating your language files — ideal for bilingual projects like Arabic/English.
 
----
-
-## ✨ Features
-
-- 🔍 Scans your code for `__()` and `@lang()` keys  
-- 🧠 Auto-generates `lang/en.json` and `lang/ar.json`  
-- ⚡ Translates missing strings using **MyMemory** _(free, no API key required)_  
-- 🔁 Fallback to **DeepL** _(requires API key — 500,000 free characters/month)_  
-- 🛠️ Simple 2-command usage  
-- 🆓 No API key needed for MyMemory
+It scans your code for translation keys, fills in missing entries in `lang/en.json`, and auto-translates them into Arabic (`lang/ar.json`) using **MyMemory** or **DeepL**.
 
 ---
 
-## 📦 Installation
+## Features
 
-Install the package using Composer:
+- Scans Blade and PHP files for `__()` and `@lang()` keys  
+- Auto-generates `lang/en.json` and `lang/ar.json`  
+- Uses **MyMemory** by default (free, no API key)  
+- Fallback support for **DeepL** (requires API key, 500k characters/month free)  
+- Works with just two Artisan commands  
+
+---
+
+## Installation
 
 ```bash
 composer require ibrahim/autotranslator
@@ -26,54 +24,47 @@ composer require ibrahim/autotranslator
 
 ---
 
-## ⚙️ Configuration (Optional)
+## Configuration (Optional)
 
-To customize source/target languages or configure drivers:
+Publish the config file:
 
 ```bash
 php artisan vendor:publish --tag=config
 ```
 
-This creates `config/autotranslator.php`:
+Example `config/autotranslator.php`:
 
 ```php
 return [
     'source' => 'en',
     'target' => 'ar',
-
-    'driver' => 'mymemory', // or 'deepl'
+    'driver' => 'mymemory', // default: free, no key needed
 
     'mymemory' => [
-        'email' => env('MYMEMORY_EMAIL'), // optional
-        'key' => env('MYMEMORY_KEY'),     // optional
+        'email' => env('MYMEMORY_EMAIL'),
+        'key' => env('MYMEMORY_KEY'),
     ],
 
     'deepl' => [
-        'key' => env('DEEPL_KEY'),        // required if using DeepL
+        'key' => env('DEEPL_KEY'), // required if using DeepL
     ],
 ];
 ```
 
-> 🔁 If `mymemory` fails or rate-limits, you can switch to `deepl` for better accuracy and reliability.  
-> DeepL offers a free tier with up to **500,000 characters/month**. [Get an API key here](https://www.deepl.com/pro-api).
+> MyMemory is the default driver and works without an API key.  
+> DeepL offers more accurate results, but requires an API key (500,000 free characters/month).
 
 ---
 
-## 🧪 Commands
+## Usage
 
-### 🔧 Step 1 — Setup translation files
-
-This command creates default `lang/en.json` and `lang/ar.json` if they don’t exist.
+### 1. Create translation files
 
 ```bash
 php artisan translate:setup
 ```
 
----
-
-### 🌐 Step 2 — Scan and translate
-
-Scans your app for translation keys, adds them to `en.json`, and auto-translates them into Arabic.
+### 2. Scan and translate
 
 ```bash
 php artisan translate:scan
@@ -81,16 +72,16 @@ php artisan translate:scan
 
 ---
 
-## 📁 Example
+## Example
 
-If you use this in a controller or Blade view:
+For this code:
 
 ```php
 __('Dashboard')
 @lang('No messages yet')
 ```
 
-The package will generate:
+The package generates:
 
 ```json
 // lang/en.json
@@ -108,22 +99,13 @@ The package will generate:
 
 ---
 
-## 💡 Tips
-
-- Change source and target languages in `config/autotranslator.php`  
-- Use `php artisan translate:scan` anytime to detect & update new strings  
-- Add your API key if you need more reliability or switch to DeepL  
-
----
-
 ## Author
 
 **Ibrahim Amasha**  
-Laravel Developer & Open Source Contributor  
-🔗 [LinkedIn](https://www.linkedin.com/in/ibrahim-amasha-24199a230)
+[LinkedIn](https://www.linkedin.com/in/ibrahim-amasha-24199a230)
 
 ---
 
-## 🪪 License
+## License
 
-This package is open-sourced under the [MIT license](LICENSE).
+MIT License
