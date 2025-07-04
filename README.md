@@ -19,7 +19,8 @@ It scans your code for translation keys, fills in missing entries in `lang/en.js
 ## Installation
 
 ```bash
-composer require ibrahimamasha/autotranslator```
+composer require ibrahimamasha/autotranslator
+```
 
 ---
 
@@ -83,13 +84,13 @@ __('Dashboard')
 The package generates:
 
 ```json
-// lang/en.json
 {
   "Dashboard": "Dashboard",
   "No messages yet": "No messages yet"
 }
+```
 
-// lang/ar.json
+```json
 {
   "Dashboard": "لوحة التحكم",
   "No messages yet": "لا توجد رسائل بعد"
